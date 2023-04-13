@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sample/users/domain/actions/register.dart';
 import 'package:sample/users/presentation/register_page_view_model.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -14,7 +15,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void initState() {
-    _viewModel = RegisterPageViewModel();
+    _viewModel = RegisterPageViewModel(Register());
     super.initState();
   }
 
