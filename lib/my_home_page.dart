@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:sample/products/presentation/products_page.dart';
 
 import 'package:sample/users/presentation/register_page.dart';
 
@@ -83,6 +84,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     MaterialPageRoute(builder: (_) => const RegisterPage()));
               },
             ),
+            GestureDetector(
+                child: const Text('Products'),
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (_) => ProductsPage()));
+                }),
           ],
         ),
       ),
