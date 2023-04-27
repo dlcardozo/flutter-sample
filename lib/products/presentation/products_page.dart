@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:decimal/decimal.dart';
+import 'package:provider/provider.dart';
+import 'package:sample/products/domain/actions/fetch_products.dart';
+import 'package:sample/products/infrastructure/in_memory_product_repository.dart';
+import 'package:sample/products/presentation/products_page_view_model.dart';
 import 'package:sample/products/presentation/single_product_page.dart';
 
 class ProductsPage extends StatefulWidget {
-  final List<Product> products = [
-    Product(name: 'Product 1', description: 'Description', image: 'images/goteros.jpeg', price: Decimal.fromInt(100)),
-    Product(name: 'Product 2', description: 'Description', image: 'images/perfume.jpeg', price: Decimal.fromInt(75)),
-    Product(name: 'Product 3', description: 'Description', image: 'images/minifrasco.jpeg', price: Decimal.fromInt(50)),
-    Product(name: 'Product 4', description: 'Description', image: 'images/perfume.jpeg', price: Decimal.fromInt(120)),
-    Product(name: 'Product 5', description: 'Description', image: 'images/goteros.jpeg', price: Decimal.fromInt(99)),
-  ];
-
   ProductsPage({Key? key}) : super(key: key);
 
   @override
@@ -18,38 +14,50 @@ class ProductsPage extends StatefulWidget {
 }
 
 class _ProductsPageState extends State<ProductsPage> {
+  late ProductsPageViewModel _viewModel;
+
+  @override
+  void initState() {
+    _viewModel =
+        ProductsPageViewModel(FetchProducts(InMemoryProductRepository()));
+    _viewModel.fetchProducts();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Products'),
       ),
-      body: ListView.builder(
-        itemCount: widget.products.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            leading: Image.asset(widget.products[index].image),
-            title: Text(widget.products[index].name),
-            subtitle: Text(widget.products[index].description),
-            trailing: Text(widget.products[index].price.toStringAsFixed(2)),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SingleProductPage(product: widget.products[index])),
-              );
-            },
-          );
-        },
+      body: ChangeNotifierProvider.value(
+        value: _viewModel,
+        child: Consumer<ProductsPageViewModel>(
+          builder: (BuildContext context, newViewModel, Widget? child) {
+            return ListView.builder(
+              itemCount: newViewModel.products.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  leading: Image.asset(newViewModel.products[index].image),
+                  title: Text(newViewModel.products[index].name),
+                  subtitle: Text(newViewModel.products[index].description),
+                  trailing: Text(
+                      newViewModel.products[index].price.toStringAsFixed(2)),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SingleProductPage(
+                            product: newViewModel.products[index]),
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
-}
-
-class Product {
-  final String name;
-  final String description;
-  final String image;
-  final Decimal price;
-
-  Product({required this.name, required this.description, required this.image, required this.price});
 }

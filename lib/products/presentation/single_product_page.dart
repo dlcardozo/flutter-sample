@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sample/products/presentation/products_page.dart';
+import 'package:sample/products/domain/actions/fetch_products.dart';
 
 class SingleProductPage extends StatelessWidget {
   final Product product;
