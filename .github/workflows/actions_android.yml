@@ -24,6 +24,12 @@ jobs:
       - name: Build Android
         run: flutter build apk --release
 
+      - name: Archive Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-app-$GITHUB_SHA
+          path: build/app/outputs/flutter-apk/
+
 #        - name: Deploy to Google Play Store
 #          uses: r0adkll/upload-google-play@v1
 #          with:
