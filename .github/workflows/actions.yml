@@ -9,6 +9,12 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      - name: Install Java 11 with Homebrew
+        run: brew install openjdk@11
+
+      - name: Set up JAVA_HOME environment variable
+        run: echo 'export JAVA_HOME="/usr/local/opt/openjdk@11"' >> $GITHUB_ENV
+
       - name: Checkout Code
         uses: actions/checkout@v2
 
