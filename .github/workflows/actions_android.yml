@@ -1,0 +1,33 @@
+name: Flutter CI/CD Pipeline
+
+on:
+  push:
+    branches: [ ci_cd ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Run Tests
+        run: flutter test
+
+      - name: Build Android
+        run: flutter build apk --release
+
+#        - name: Deploy to Google Play Store
+#          uses: r0adkll/upload-google-play@v1
+#          with:
+#            service_account_json: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+#            package_name: com.example.myapp
+#            track: 'production'
+#            apk: ./build/app/outputs/apk/release/app-release.apk
