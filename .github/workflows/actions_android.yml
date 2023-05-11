@@ -27,7 +27,7 @@ jobs:
       - name: Archive Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: my-app-$GITHUB_SHA
+          name: my-android-app
           path: build/app/outputs/flutter-apk/
 
 #        - name: Deploy to Google Play Store

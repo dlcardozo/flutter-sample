@@ -22,12 +22,12 @@ jobs:
         run: flutter test
 
       - name: Build iOS
-        run: flutter build ios --release --no-codesign
+        run: flutter build ipa --release --no-codesign
 
       - name: Archive Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: my-app-$GITHUB_SHA
+          name: my-ios-app
           path: /Users/runner/work/flutter-sample/flutter-sample/build/ios/iphoneos/
 
 #      - name: Deploy to Apple App Store
