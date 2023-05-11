@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: my-ios-app
-          path: /Users/runner/work/flutter-sample/flutter-sample/build/ios/iphoneos/
+          path: /Users/runner/work/flutter-sample/flutter-sample/build/ios/archive/
 
 #      - name: Deploy to Apple App Store
 #        uses: codecov/codecov-action@v1
